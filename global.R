@@ -42,14 +42,14 @@ countries <- sort(unique(allData$`Country/Region`))
 # baseURL.BR = "https://raw.githubusercontent.com/belisards/coronabr/master/dados"
 # baseURL.BR = "https://covid.saude.gov.br/assets/files/COVID19_"
 baseURL.BR <- "https://raw.githubusercontent.com/covid19br/covid19br.github.io/master/dados"
-# baseURL.BR <- "https://raw.githubusercontent.com/thaispaiva/app_COVID19/master/R/STAN"
+# baseURL.BR <- "https://raw.githubusercontent.com/CovidLP/app_COVID19/master/R/STAN"
 brData <- loadData.BR("EstadosCov19.csv")
 
 ## Setup data source - US
 baseURL.US = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series"
 
-covid19_confirm <- loadData.US_cases("cache/time_series_covid19_confirmed_US.csv", "confirmed")
-covid19_deaths <- loadData.US_deaths("cache/time_series_covid19_deaths_US.csv", "deaths")
+covid19_confirm <- loadData.US_cases("time_series_covid19_confirmed_US.csv", "confirmed")
+covid19_deaths <- loadData.US_deaths("time_series_covid19_deaths_US.csv", "deaths")
 usData <- left_join(covid19_confirm,covid19_deaths, by=c('state','date')) %>%
   rename(`Province/State`=state, CumConfirmed=confirmed, CumDeaths=deaths) %>%
   select(`Province/State`, CumConfirmed, CumDeaths, date)
@@ -85,7 +85,7 @@ hide_countries_nc <- list()
 hide_countries_d <- list()
 
 ## Read RDS files from github repository
-githubURL <- "https://github.com/thaispaiva/app_COVID19/raw/master/STpredictions"
+githubURL <- "https://github.com/CovidLP/app_COVID19/raw/master/STpredictions"
 
 ##-- Date format
 dt_format <- "%d/%b/%y"

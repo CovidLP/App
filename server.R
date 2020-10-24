@@ -493,11 +493,11 @@ server = function(input, output, session) {
   ##-- + Prediction evolution
   data_pred_hist <- eventReactive(c(input$country, input$state, input$metrics_LT), {
     url <- switch(input$country,
-                  "Brazil" = url("https://github.com/thaispaiva/app_COVID19/blob/master/STvideos/Brazil_n.rds?raw=true"),
-                  #"China" = url("https://github.com/thaispaiva/app_COVID19/blob/master/STvideos/China_n.rds?raw=true"),
-                  "Italy" = url("https://github.com/thaispaiva/app_COVID19/blob/master/STvideos/Italy_n.rds?raw=true"),
-                  "Spain" = url("https://github.com/thaispaiva/app_COVID19/blob/master/STvideos/Spain_n.rds?raw=true")#,
-                  #"US" = url("https://github.com/thaispaiva/app_COVID19/blob/master/STvideos/US_n.rds?raw=true")
+                  "Brazil" = url("https://github.com/CovidLP/app_COVID19/blob/master/STvideos/Brazil_n.rds?raw=true"),
+                  #"China" = url("https://github.com/CovidLP/app_COVID19/blob/master/STvideos/China_n.rds?raw=true"),
+                  "Italy" = url("https://github.com/CovidLP/app_COVID19/blob/master/STvideos/Italy_n.rds?raw=true"),
+                  "Spain" = url("https://github.com/CovidLP/app_COVID19/blob/master/STvideos/Spain_n.rds?raw=true")#,
+                  #"US" = url("https://github.com/CovidLP/app_COVID19/blob/master/STvideos/US_n.rds?raw=true")
     )
     
     if(is.null(url)) return(NULL)

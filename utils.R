@@ -605,7 +605,7 @@ loadData.US_cases = function(fileName, columnName) {
     mutate(date=as.Date(date, format="%m/%d/%y")) %>%
     rename(country = Country_Region, state = Province_State)
   data = data %>% group_by(state, country, date) %>% summarise(confirmed=sum(confirmed))
-  save(data, file=fileName)  
+  save(data, file = paste0("cache/", fileName))  
   return(data)
 }
 
@@ -619,14 +619,14 @@ loadData.US_deaths = function(fileName, columnName) {
     mutate(date=as.Date(date, format="%m/%d/%y")) %>%
     rename(country = Country_Region, state = Province_State, pop = Population)
   data = data %>% group_by(state, country, date) %>% summarise(deaths=sum(deaths), pop=sum(pop))
-  save(data, file=fileName)
+  save(data, file = paste0("cache/", fileName))
   return(data)
 }
 
 
 ##-- Function to return list of countries with available data on github
 readfiles.repo <- function() {
-  req <- GET("https://api.github.com/repos/thaispaiva/app_COVID19/git/trees/master?recursive=1")
+  req <- GET("https://api.github.com/repos/CovidLP/app_COVID19/git/trees/master?recursive=1")
   stop_for_status(req)
   
   # extract list of files on github
