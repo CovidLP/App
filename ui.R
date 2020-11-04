@@ -11,7 +11,7 @@ shinyUI(
     useShinyjs(),
     
     ## add favicon
-    tags$head(tags$link(rel = "icon", href = "favicon.ico")),
+    tags$head(tags$link(rel = "icon", href = "img/favicon.ico")),
     
     ## Título
     tagList(
@@ -27,7 +27,7 @@ shinyUI(
           width = 2,
           tags$a(
             href = "http://est.ufmg.br/covidlp/home/pt/", 
-            tags$img(src = "logo_covid.png", title = "DEST/UFMG", height = "40px", style = "margin-top: 10px; margin-left: 20px")
+            tags$img(src = "img/logo_covid.png", title = "DEST/UFMG", height = "40px", style = "margin-top: 10px; margin-left: 20px")
           )
         ),
         ## Título
