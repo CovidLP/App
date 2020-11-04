@@ -5,7 +5,7 @@ shinyUI(
     theme = "styles.css",
     
     ## Include Google Analytics
-    tags$head(includeHTML(("google-analytics.html"))),
+    tags$head(includeHTML(("html/google-analytics.html"))),
     
     ## Habilitando o shinyjs
     useShinyjs(),
@@ -343,6 +343,6 @@ shinyUI(
     # HTML("</center>"),
     
     ##-- Footer ----
-    includeHTML("footer.html")
+    includeHTML("html/footer.html")
   )
 )

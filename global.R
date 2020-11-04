@@ -14,7 +14,7 @@ library(shinyBS)
 library(markdown)
 
 ## Load local functions
-source("utils.R")
+source("R/utils.R")
 dir.create("cache", showWarnings = FALSE)
 
 ## Define font to be used later
