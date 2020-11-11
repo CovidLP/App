@@ -242,7 +242,7 @@ server = function(input, output, session) {
           scale = input$scale_data,
           varPrefix = "Cum",  
           legendPrefix = "", 
-          yaxisTitle = "Novas Mortes por Dia/New deaths per Day"
+          yaxisTitle = "Casos acumulados/Cumulative cases"
         ) 
         
         return(plt)
