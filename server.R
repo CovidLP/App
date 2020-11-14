@@ -298,9 +298,9 @@ server = function(input, output, session) {
   ##-- + Short term prediction title
   output$title_ST = renderUI({
     if(input$metrics_ST == "Confirmed"){
-      tags$h3("Previsão de casos acumulados/Prediction of cumulated cases:", style = "text-align:left")
+      tags$h3("Previsão de casos acumulados/Prediction of cumulative cases:", style = "text-align:left")
     } else{
-      tags$h3("Previsão de mortes acumuladas/Prediction of cumulated deaths:", style = "text-align:left")
+      tags$h3("Previsão de mortes acumuladas/Prediction of cumulative deaths:", style = "text-align:left")
     }
   })
   
@@ -308,8 +308,8 @@ server = function(input, output, session) {
   output$STpred = renderPlotly({
     yaxisTitle = switch(
       input$metrics_ST,
-      Confirmed = "Casos acumulados/Cumulated cases",
-      Deaths = "Mortes acumuladas/Cumulated deaths"
+      Confirmed = "Casos acumulados/Cumulative cases",
+      Deaths = "Mortes acumuladas/Cumulative deaths"
     )
     
     if((input$country %in% hide_countries_nc & input$metrics_ST == "Confirmed") | (input$country %in% hide_countries_d & input$metrics_ST == "Deaths")) {

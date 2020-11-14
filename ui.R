@@ -138,7 +138,7 @@ shinyUI(
           ),
           
           ## Valores acumulados
-          h3("Casos acumulados/Cumulated cases:", style = "text-align:left"),
+          h3("Casos acumulados/Cumulative cases:", style = "text-align:left"),
           # uiOutput("msg_data2"),
           withSpinner(
             plotlyOutput("cumulatedMetrics")
