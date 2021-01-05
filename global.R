@@ -1,4 +1,5 @@
 ## Load packages
+library(covid19br)
 library(dplyr)
 library(tidyr)
 library(httr)

@@ -568,6 +568,21 @@ loadData <- function(fileName, columnName) {
 ##-- Function to load data - BRAZIL
 loadData.BR <- function(fileName) {
   if(!file.exists(fileName) || minutesSinceLastUpdate(fileName) > 10) {
+    data <- downloadCovid19(level = "states") %>%
+      select(state, accumCases, accumDeaths, date) %>%
+      arrange(state, date) %>%
+      setNames(nm = c('Province/State', 'CumConfirmed', 'CumDeaths', 'date'))
+    
+    save(data, file = paste0("cache/", fileName))  
+  } else {
+    load(file = paste0("cache/", fileName))
+  }
+  
+  return(data)
+}
+
+loadData.BR_old <- function(fileName) {
+  if(!file.exists(fileName) || minutesSinceLastUpdate(fileName) > 10) {
     data <- read.csv(file.path(baseURL.BR, fileName), check.names = FALSE, stringsAsFactors = FALSE, sep=",") %>%
       select(-c(1, 4, 6)) %>%
       as_tibble() %>%
