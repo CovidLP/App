@@ -573,6 +573,12 @@ loadData.BR <- function(fileName) {
       arrange(state, date) %>%
       setNames(nm = c('Province/State', 'CumConfirmed', 'CumDeaths', 'date'))
     
+    data <- data %>%
+      group_by(`Province/State`, `date`) %>%
+      arrange(desc(CumConfirmed)) %>%
+      slice(1) %>%
+      ungroup()
+    
     save(data, file = paste0("cache/", fileName))  
   } else {
     load(file = paste0("cache/", fileName))

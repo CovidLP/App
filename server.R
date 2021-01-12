@@ -10,16 +10,17 @@ server = function(input, output, session) {
   # )
   
   ##-- Add message on startup ----
-  showModal(modalDialog(
-    div(
-      p("Caso esteja acessando pelo celular, o aplicativo é melhor visualizado com o aparelho na horizontal"),
-      p("If you are on mobile, the application is best viewed with the device on horizontal.")
-    ),
-    easyClose = FALSE,
-    footer = tagList(
-      actionButton(inputId = "ok_popup", label = "Ok")
-    )
-  ))
+  showModal(
+    modalDialog(
+      div(
+        p("Caso esteja acessando pelo celular, o aplicativo é melhor visualizado com o aparelho na horizontal"),
+        p("If you are on mobile, the application is best viewed with the device on horizontal.")
+      ),
+      easyClose = FALSE,
+      footer = tagList(
+        actionButton(inputId = "ok_popup", label = "Ok")
+      )
+    ))
   
   ##-- Data reactives ----
   ##-- + Load data depending on the country/region selected
@@ -415,9 +416,9 @@ server = function(input, output, session) {
       last_date_n <- min(pred_n$lt_predict$date) - 1
       
       file <- paste0("LTpred_", isolate(input$country),
-                    ifelse(isolate(input$state) == "<all>", "", paste0("_", isolate(input$state))),
-                    switch(isolate(input$metrics_LT), Deaths = "_d_", Confirmed = "_n_"),
-                    format(last_date_n, format = "%d%m%Y"), ".csv")
+                     ifelse(isolate(input$state) == "<all>", "", paste0("_", isolate(input$state))),
+                     switch(isolate(input$metrics_LT), Deaths = "_d_", Confirmed = "_n_"),
+                     format(last_date_n, format = "%d%m%Y"), ".csv")
       
       return(file)
     },
