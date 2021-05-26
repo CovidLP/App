@@ -67,8 +67,8 @@ server = function(input, output, session) {
       out <- d %>% 
         mutate(
           dateStr = format(date, format = "%d/%b"),
-          NewConfirmed = CumConfirmed - lag(CumConfirmed, default = 0),
-          NewDeaths = CumDeaths - lag(CumDeaths, default = 0)
+          NewConfirmed = CumConfirmed - lag(CumConfirmed, default = NA),
+          NewDeaths = CumDeaths - lag(CumDeaths, default = NA)
           # CumConfirmed = cumsum(NewConfirmed),
           # CumDeaths = cumsum(NewDeaths)
         )
@@ -76,8 +76,8 @@ server = function(input, output, session) {
       out <- d %>% 
         mutate(
           dateStr = format(date, format = "%d/%b"),
-          NewConfirmed = CumConfirmed - lag(CumConfirmed, default = 0),
-          NewDeaths = CumDeaths - lag(CumDeaths, default = 0)
+          NewConfirmed = CumConfirmed - lag(CumConfirmed, default = NA),
+          NewDeaths = CumDeaths - lag(CumDeaths, default = NA)
           # CumConfirmed = cumsum(NewConfirmed),
           # CumDeaths = cumsum(NewDeaths)
         )
@@ -139,6 +139,7 @@ server = function(input, output, session) {
     
     if(country_name == "Brazil") {
       if(state_name != "<all>") {
+        browser()
         if(exists(paste0(country_name, "_", state_name, "_", metric))) {
           pred_n <- get(paste0(country_name, "_", state_name, "_", metric))
         } else {
@@ -433,6 +434,7 @@ server = function(input, output, session) {
         mutate_at(2:4, round, 0) %>%
         rename_at(2:4 ,function(x) paste0("Pred_", x))
       
+      aux$flag <- ifelse(is.null(aux$flag), 0, aux$flag)
       if(aux$flag == 1) pred_n <- pred_n %>% select(-c("Pred_q25", "Pred_q975"))
       
       data.out <- bind_rows(data, pred_n)
@@ -461,6 +463,7 @@ server = function(input, output, session) {
       summary <- aux$lt_summary
       summary$NTC500 <- round(summary$NTC500,0)
       
+      aux$flag <- ifelse(is.null(aux$flag), 0, aux$flag)
       if(aux$flag != 1){
         summary$NTC25 <- round(summary$NTC25, 0)
         summary$NTC975 <- round(summary$NTC975, 0)
