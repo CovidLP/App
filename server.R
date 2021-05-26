@@ -139,7 +139,6 @@ server = function(input, output, session) {
     
     if(country_name == "Brazil") {
       if(state_name != "<all>") {
-        browser()
         if(exists(paste0(country_name, "_", state_name, "_", metric))) {
           pred_n <- get(paste0(country_name, "_", state_name, "_", metric))
         } else {
