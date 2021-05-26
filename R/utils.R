@@ -225,7 +225,7 @@ plot_LTpred <- function(data, predLT_n,
     pred_n <- predLT_n$lt_predict
     pred_summary <- predLT_n$lt_summary
     mu_plot <- predLT_n$mu_plot
-    flag <- predLT_n$flag
+    flag <- ifelse(is.null(predLT_n$flag), 0, predLT_n$flag)
     
     ## Create last date, and format dates for prediction
     last_date_n <- min(pred_n$date) - 1
