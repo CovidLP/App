@@ -88,8 +88,16 @@ body {
     color: white;
 }
 
-.bttn-material-flat.bttn-default {
+.bttn-material-flat.bttn-primary {
     float: right;
+    background: #00b1d8;
+    color: #fff;
+    margin-right: 0.3em
+}
+
+.bttn-material-flat.bttn-primary .fa, .fas {
+    color: #fff;
+    font-size: medium
 }
 
 hr {
