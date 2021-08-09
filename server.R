@@ -186,7 +186,7 @@ server = function(input, output, session) {
     }
     
     sel <- ifelse(input$country %in% countries, input$country, "Brazil")
-    updateSelectInput(session, "country", choices = countries, selected = sel)
+    updatePickerInput(session = session, inputId = "country", choices = countries, selected = sel)
   })
   
   ##-- + State
@@ -210,7 +210,7 @@ server = function(input, output, session) {
     states <- c("<all>", sort(unique(states)))
     sel <- ifelse(input$state %in% states, input$state, "<all>")
     
-    updateSelectInput(session, "state", choices = states, selected = sel)
+    updatePickerInput(session = session, inputId = "state", choices = states, selected = sel)
   })
   
   ##-- Plots ----
