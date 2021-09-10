@@ -216,7 +216,7 @@ plot_STpred <- function(data, predST_n,
   plt
 }
 
-##-- Plot for ST prediction
+##-- Plot for LT prediction
 plot_LTpred <- function(data, predLT_n,
                         country_name, state_name, metrics, scale,
                         varPrefix, legendPrefix, yaxisTitle) {
@@ -225,7 +225,8 @@ plot_LTpred <- function(data, predLT_n,
     pred_n <- predLT_n$lt_predict
     pred_summary <- predLT_n$lt_summary
     mu_plot <- predLT_n$mu_plot
-    flag <- ifelse(is.null(predLT_n$flag), 0, predLT_n$flag)
+    # flag <- ifelse(is.null(predLT_n$flag), 0, predLT_n$flag)
+    flag = 0   # variável local, para não ocultar o IC no summary
     
     ## Create last date, and format dates for prediction
     last_date_n <- min(pred_n$date) - 1
@@ -337,7 +338,7 @@ plot_LTpred <- function(data, predLT_n,
           color = switch(metric, Deaths = dred, Confirmed = blu),
           width = 1.5)
       )
-    if(flag != 1){
+    # if(flag != 1){
       plt <- plt %>%
         ## Add 2,5% and 97,5% quantiles
         add_trace(
@@ -361,7 +362,7 @@ plot_LTpred <- function(data, predLT_n,
           fillcolor = 'rgba(100, 100, 100, 0.5)',
           line = list(color = 'rgba(0, 0, 0, 1)', width = 0)
         )
-    }
+    # }
     
     plt <- plt %>%
       ## Add median of prediction

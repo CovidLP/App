@@ -212,7 +212,7 @@ shinyUI(
                       <a href = 'http://est.ufmg.br/covidlp/home/pt/blog/atualizacoes' style = 'float: right' target = '_blank''>Atualizações/Updates</a>
                   </div>
                </div>"),
-          uiOutput("msg_hide_ST"),
+          # uiOutput("msg_hide_ST"),
           withSpinner(
             plotlyOutput("STpred")
           ),
@@ -265,9 +265,9 @@ shinyUI(
           ),
           HTML("</center>"),
           
-          ## Short term prediction
+          ## Long term prediction
           uiOutput("title_LT"),
-          # uiOutput("msg_LT"),
+          uiOutput("msg_LT"),
           HTML("<div class = 'row'>
                   <div class = 'column'>
                       <h5>Em desenvolvimento/Under development</h5>
@@ -276,7 +276,7 @@ shinyUI(
                       <a href = 'http://est.ufmg.br/covidlp/home/pt/blog/atualizacoes' style = 'float: right' target = '_blank''>Atualizações/Updates</a>
                   </div>
                </div>"),
-          uiOutput("msg_hide_LT"),
+          # uiOutput("msg_hide_LT"),
           withSpinner(
             plotlyOutput("LTpred")
           ),

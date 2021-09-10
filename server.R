@@ -9,18 +9,18 @@ server = function(input, output, session) {
   #   html = TRUE
   # )
   
-  ##-- Add message on startup ----
-  showModal(
-    modalDialog(
-      div(
-        p("Caso esteja acessando pelo celular, o aplicativo é melhor visualizado com o aparelho na horizontal"),
-        p("If you are on mobile, the application is best viewed with the device on horizontal.")
-      ),
-      easyClose = FALSE,
-      footer = tagList(
-        actionButton(inputId = "ok_popup", label = "Ok")
-      )
-    ))
+  # ##-- Add message on startup ----
+  # showModal(
+  #   modalDialog(
+  #     div(
+  #       p("Caso esteja acessando pelo celular, o aplicativo é melhor visualizado com o aparelho na horizontal"),
+  #       p("If you are on mobile, the application is best viewed with the device on horizontal.")
+  #     ),
+  #     easyClose = FALSE,
+  #     footer = tagList(
+  #       actionButton(inputId = "ok_popup", label = "Ok")
+  #     )
+  #   ))
   
   ##-- Data reactives ----
   ##-- + Load data depending on the country/region selected
@@ -289,8 +289,11 @@ server = function(input, output, session) {
   
   ##-- + Data message
   output$msg_ST = renderUI({
-    if(input$country == "Brazil"){
-      tags$i("Os dados e previsões para o Brasil estão temporariamente suspensos devido à instabilidade nas fontes dos dados.",br(),"Data and forecasts for Brazil are temporarily suspended due to instability in data sources.", style = "text-align:left; color:red")
+    aux <- pred_n() ## !!! não existe flag no objeto pred_n (Curto Prazo)!
+    if(aux$flag == 1){
+      tags$i("Mensagem de warning! flag 1", style = "text-align:left; color:red")
+    # if(input$country == "Brazil"){
+    #   tags$i("Os dados e previsões para o Brasil estão temporariamente suspensos devido à instabilidade nas fontes dos dados.",br(),"Data and forecasts for Brazil are temporarily suspended due to instability in data sources.", style = "text-align:left; color:red")
     } else{
       tags$h5("", style = "text-align:left")
     }
@@ -374,10 +377,13 @@ server = function(input, output, session) {
   
   ##-- + Long term prediction message
   output$msg_LT = renderUI({
-    if(input$country == "Brazil"){
-      tags$i("Os dados e previsões para o Brasil estão temporariamente suspensos devido à instabilidade nas fontes dos dados.",br(),"Data and forecasts for Brazil are temporarily suspended due to instability in data sources.", style = "text-align:left; color:red")
+    aux <- predLT_n()
+    if(aux$flag > 0.5){
+      tags$i("Resultados sob análise",br(),"Results under analysis", style = "text-align:left; color:red")
+    # if(input$country == "Brazil"){
+    #   tags$i("Os dados e previsões para o Brasil estão temporariamente suspensos devido à instabilidade nas fontes dos dados.",br(),"Data and forecasts for Brazil are temporarily suspended due to instability in data sources.", style = "text-align:left; color:red")
     } else{
-      tags$h5("", style = "text-align:left")
+        tags$h5("", style = "text-align:left")
     }
   })
   
@@ -389,9 +395,15 @@ server = function(input, output, session) {
       Deaths = "Novas mortes por dia/New deaths per day"
     )
     
-    if((input$country %in% hide_countries_nc & input$metrics_LT == "Confirmed") | (input$country %in% hide_countries_d & input$metrics_LT == "Deaths")) {
-      return(NULL) 
-    }
+    # if((input$country %in% hide_countries_nc & input$metrics_LT == "Confirmed") | (input$country %in% hide_countries_d & input$metrics_LT == "Deaths")) {
+    #   return(NULL) 
+    # }
+    
+    # ## Hide LT plot if flag==2
+    # aux <- predLT_n()
+    # if(aux$flag == 2){
+    #   return(NULL)
+    # }
     
     plt <- plot_LTpred(
       data = data(),
@@ -433,8 +445,8 @@ server = function(input, output, session) {
         mutate_at(2:4, round, 0) %>%
         rename_at(2:4 ,function(x) paste0("Pred_", x))
       
-      aux$flag <- ifelse(is.null(aux$flag), 0, aux$flag)
-      if(aux$flag == 1) pred_n <- pred_n %>% select(-c("Pred_q25", "Pred_q975"))
+      # aux$flag <- ifelse(is.null(aux$flag), 0, aux$flag)
+      # if(aux$flag == 1) pred_n <- pred_n %>% select(-c("Pred_q25", "Pred_q975"))
       
       data.out <- bind_rows(data, pred_n)
       data.out <- inner_join(data.out, aux$mu_plot)
@@ -462,11 +474,11 @@ server = function(input, output, session) {
       summary <- aux$lt_summary
       summary$NTC500 <- round(summary$NTC500,0)
       
-      aux$flag <- ifelse(is.null(aux$flag), 0, aux$flag)
-      if(aux$flag != 1){
-        summary$NTC25 <- round(summary$NTC25, 0)
-        summary$NTC975 <- round(summary$NTC975, 0)
-      }
+      # aux$flag <- ifelse(is.null(aux$flag), 0, aux$flag)
+      # if(aux$flag != 1){
+      #   summary$NTC25 <- round(summary$NTC25, 0)
+      #   summary$NTC975 <- round(summary$NTC975, 0)
+      # }
       
       summary <- lapply(summary, function(x) ifelse(is.null(x), "NA", x))
       
@@ -477,7 +489,9 @@ server = function(input, output, session) {
   ##-- Hiding countries
   ##-- + Hiding countries for new cases
   output$msg_hide_ST = renderUI({
-    if((input$country %in% hide_countries_nc & input$metrics_ST == "Confirmed") | (input$country %in% hide_countries_d & input$metrics_ST == "Deaths")) {
+    aux <- pred_n()
+    if(aux$flag == 2){ ## não existe flag no objeto pred_n (Curto Prazo)!
+    # if((input$country %in% hide_countries_nc & input$metrics_ST == "Confirmed") | (input$country %in% hide_countries_d & input$metrics_ST == "Deaths")) {
       tags$i("Resultados não disponíveis.", br(), "Results not available.", style = "text-align:left; color:red")
     } else{
       tags$h5("", style = "text-align:left")
@@ -486,7 +500,9 @@ server = function(input, output, session) {
   
   ##-- + Hiding countries for deaths
   output$msg_hide_LT = renderUI({
-    if((input$country %in% hide_countries_nc & input$metrics_LT == "Confirmed") | (input$country %in% hide_countries_d & input$metrics_LT == "Deaths")) {
+    aux <- predLT_n()
+    if(aux$flag == 2){
+    # if((input$country %in% hide_countries_nc & input$metrics_LT == "Confirmed") | (input$country %in% hide_countries_d & input$metrics_LT == "Deaths")) {
       tags$i("Resultados não disponíveis.", br(), "Results not available.", style = "text-align:left; color:red")
     } else{
       tags$h5("", style = "text-align:left")
