@@ -216,8 +216,8 @@ server = function(input, output, session) {
   ##-- Plots ----
   ##-- + Observed data
   observe({
-    if(!is.null(input$ok_popup) && input$ok_popup > 0) {
-      removeModal()
+    # if(!is.null(input$ok_popup) && input$ok_popup > 0) {
+    #   removeModal()
       
       output$dailyMetrics = renderPlotly({
         plt <- plot_obs(
@@ -248,7 +248,7 @@ server = function(input, output, session) {
         
         return(plt)
       })
-    }
+    # }
   })
   
   ##-- + Download
