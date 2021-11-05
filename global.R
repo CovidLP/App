@@ -37,6 +37,8 @@ allData <- loadData("time_series_covid19_confirmed_global.csv", "CumConfirmed") 
     by = c("Province/State", "Country/Region", "date")
   ) 
 
+allData$`Country/Region` <- recode(allData$`Country/Region`, US = "United States of America", `Korea, South` = "South Korea")
+
 countries <- sort(unique(allData$`Country/Region`))
 
 ## Setup data source (MSaude/BR)- BRAZIL
