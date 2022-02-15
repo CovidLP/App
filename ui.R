@@ -13,6 +13,9 @@ shinyUI(
     ## add favicon
     tags$head(tags$link(rel = "icon", href = "img/favicon.ico")),
     
+    ## change size of slider animate button on Evolution tab
+    tags$head(tags$style(type='text/css', ".slider-animate-button { font-size: 2 0pt !important; }")),
+    
     ## Título
     tagList(
       tags$head(
@@ -360,6 +363,7 @@ shinyUI(
           ## Long term prediction
           # uiOutput("title_LT"),
           # uiOutput("msg_LT"),
+          HTML("<h3>Evolução das Previsões de Longo Prazo/Evolution of the Long Term Predictions:</h3>"),
           HTML("<div class = 'row'>
                   <div class = 'column'>
                       <h5>Em desenvolvimento/Under development</h5>
@@ -373,7 +377,8 @@ shinyUI(
           fluidRow(align = "center",
                    sliderTextInput(
                      "bins",
-                     "Data:",
+                     # "Data:",
+                     tags$h4("Selecione uma data e clique na seta para iniciar a animação:",br(),"Select a date and click on the play button to start the animation:"),
                      choices = read.table(paste0("https://github.com/CovidLP/LTPred_Evolution/raw/main/GraphsPng/Brazil_n/date.vector.txt"))$V1,
                      animate = animationOptions(
                        interval = 750,
@@ -381,7 +386,7 @@ shinyUI(
                        playButton = NULL,
                        pauseButton = NULL
                      ),
-                     width = "40%"
+                     width = "60%"
                    )
           ),
           
