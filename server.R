@@ -563,4 +563,71 @@ server = function(input, output, session) {
       })
     }
   })
+  
+  observe({
+    
+    if (as.character(input$state) != "<all>") {
+      local = paste0("Brazil_",
+                     as.character(input$state),
+                     "_",
+                     ifelse(input$metrics_EV == "Confirmed", "ne", "de"))
+    } else{
+      local = paste0(str_replace_all(input$country," ","-"),
+                     "_",
+                     ifelse(input$metrics_EV == "Confirmed", "n", "d"))
+    }
+    
+    choices = read.table(paste0("https://github.com/CovidLP/LTPred_Evolution/raw/main/GraphsPng/", local, "/date.vector.txt"))$V1
+    
+    updateSliderTextInput(
+      session = session,
+      inputId = "bins",
+      choices = choices,
+      selected = choices[1]
+    )
+    
+  })
+  
+  observeEvent(input$country, {
+    if(input$country == "Brazil") {
+      states <-c("AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT","PA",
+                 "PB","PE","PI","PR","RJ","RN","RO","RR","RS","SC","SE","SP","TO")
+    } else { 
+      states <- NULL
+    }
+    
+    states <- c("<all>", states)
+    sel <- ifelse(input$state %in% states, input$state, "<all>")
+    
+    updatePickerInput(session = session, inputId = "state", choices = states, selected = sel)
+  })
+  
+  outfile <- reactive({
+    
+    url_init = "https://raw.githubusercontent.com/CovidLP/LTPred_Evolution/main/GraphsPng/"
+    
+    state = as.character(input$state)
+    
+    if (state != "<all>") {
+      local = paste0("Brazil_",
+                     as.character(input$state),
+                     "_",
+                     ifelse(input$metrics_EV == "Confirmed", "ne", "de"))
+    } else{
+      local = paste0(str_replace_all(input$country," ","-"),
+                     "_",
+                     ifelse(input$metrics_EV == "Confirmed", "n", "d"))
+    }
+    
+    out = paste0(url_init, local, "/", as.character(input$bins), ".png")
+    return(out)
+    
+  })
+  
+  output$distPlot <- renderImage({
+    img_file <- tempfile(fileext = ".png")
+    download.file(url = outfile(), destfile = img_file, mode = "wb", quiet = TRUE)
+    list(src = img_file, height = "400px")
+  }, deleteFile = TRUE)
+  
 }

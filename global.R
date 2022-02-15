@@ -13,6 +13,7 @@ library(shinycssloaders)
 library(shinyWidgets)
 library(shinyBS)
 library(markdown)
+library(stringr)
 
 ## Load local functions
 source("R/utils.R")

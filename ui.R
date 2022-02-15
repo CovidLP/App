@@ -5,7 +5,7 @@ shinyUI(
     theme = "styles.css",
     
     ## Include Google Analytics
-    tags$head(includeHTML(("html/google-analytics.html"))),
+    # tags$head(includeHTML(("html/google-analytics.html"))),
     
     ## Habilitando o shinyjs
     useShinyjs(),
@@ -319,7 +319,84 @@ shinyUI(
                    border-radius: 4px; 
                    box-shadow: 0 0 4px 0 rgba(69, 69, 69, 0.2); 
                    margin: 10px; padding: 10px;"
+        ),
+        
+        tabPanel(
+          title = HTML("<center>
+                          <i class='fa fa-play'></i>
+                          <div>
+                            Evolução<br>Evolution
+                          </div>
+                        </center>"),
+          value = "tab_evolution", 
+          
+          ## Inputs
+          HTML("<center>"),
+          HTML("<h4 style = 'text-align: center;'>Selecione o tipo de caso que deseja investigar.<br>Select the kind of data to analyze.</h4>"),
+          div(
+            div(
+              class = "btn_div",
+              radioGroupButtons(
+                inputId = "metrics_EV",
+                label = NULL,
+                choices = c("Confirmados/Confirmed" = "Confirmed", "Mortes/Deaths" = "Deaths" ),
+                status = "primary", 
+                individual = TRUE,
+                checkIcon = list(
+                  yes = icon("ok", lib = "glyphicon"),
+                  no = icon("remove",lib = "glyphicon")
+                )
+              )
+            ),
+            bsTooltip(id = "metrics_LT",
+                      title = HTML("Selecione uma das métricas para ser apresentada. <br> Select one metric to display."),
+                      placement = "right", 
+                      options = list(container = "body")
+            )
+            
+          ),
+          HTML("</center>"),
+          
+          ## Long term prediction
+          # uiOutput("title_LT"),
+          # uiOutput("msg_LT"),
+          HTML("<div class = 'row'>
+                  <div class = 'column'>
+                      <h5>Em desenvolvimento/Under development</h5>
+                  </div>
+                  <div class = 'column'>
+                      <a href = 'http://est.ufmg.br/covidlp/home/pt/blog/atualizacoes' style = 'float: right' target = '_blank''>Atualizações/Updates</a>
+                  </div>
+               </div>"),
+          # uiOutput("msg_hide_LT"),
+          
+          fluidRow(align = "center",
+                   sliderTextInput(
+                     "bins",
+                     "Data:",
+                     choices = read.table(paste0("https://github.com/CovidLP/LTPred_Evolution/raw/main/GraphsPng/Brazil_n/date.vector.txt"))$V1,
+                     animate = animationOptions(
+                       interval = 750,
+                       loop = FALSE,
+                       playButton = NULL,
+                       pauseButton = NULL
+                     ),
+                     width = "40%"
+                   )
+          ),
+          
+          # Show a plot of the generated distribution
+          fluidRow(align = "center",
+                   imageOutput("distPlot")
+                   
+          ),
+          
+          style = "background-color: #fff; 
+                   border-radius: 4px; 
+                   box-shadow: 0 0 4px 0 rgba(69, 69, 69, 0.2); 
+                   margin: 10px; padding: 10px;"
         )
+        
       )
     ),
     
