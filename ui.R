@@ -5,7 +5,7 @@ shinyUI(
     theme = "styles.css",
     
     ## Include Google Analytics
-    # tags$head(includeHTML(("html/google-analytics.html"))),
+    tags$head(includeHTML(("html/google-analytics.html"))),
     
     ## Habilitando o shinyjs
     useShinyjs(),
@@ -14,7 +14,7 @@ shinyUI(
     tags$head(tags$link(rel = "icon", href = "img/favicon.ico")),
     
     ## change size of slider animate button on Evolution tab
-    tags$head(tags$style(type='text/css', ".slider-animate-button { font-size: 2 0pt !important; }")),
+    tags$head(tags$style(type='text/css', ".slider-animate-button { font-size: 30pt !important; }")),
     
     ## Título
     tagList(
@@ -351,7 +351,7 @@ shinyUI(
                 )
               )
             ),
-            bsTooltip(id = "metrics_LT",
+            bsTooltip(id = "metrics_EV",
                       title = HTML("Selecione uma das métricas para ser apresentada. <br> Select one metric to display."),
                       placement = "right", 
                       options = list(container = "body")
